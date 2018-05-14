@@ -28,6 +28,13 @@ objects_in ([object_detection_msgs/Objects](msg/Objects.msg))
 objects_out ([object_detection_msgs/Objects](msg/Objects.msg))
 * synchronized to a image or objects subscribed
 
+### Services
+get_objects ([object_detection_msgs/GetObjects](srv/GetObjects.srv))
+* get user-specified objects
+
+set_objects ([object_detection_msgs/SetObjects](srv/SetObjects.srv))
+* set user-specified objects
+
 ### Parameters
 ~subscribe_image (bool, default: false)
 * Either this or ~subscribe_objects must be true to let this nodelet work
