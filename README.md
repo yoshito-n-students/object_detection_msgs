@@ -26,7 +26,7 @@ objects_in ([object_detection_msgs/Objects](msg/Objects.msg))
 
 ### Published topics
 objects_out ([object_detection_msgs/Objects](msg/Objects.msg))
-* synchronized to a image or objects subscribed
+* synchronized to an image or objects subscribed
 
 ### Services
 get_objects ([object_detection_msgs/GetObjects](srv/GetObjects.srv))
