@@ -34,11 +34,15 @@ toCvContours(const std::vector< Points > &contours_msg) {
   return cv_contours;
 }
 
-static inline Point toPointMsg(const cv::Point &cv_point) {
+static inline Point toPointMsg(const int x, const int y) {
   Point point_msg;
-  point_msg.x = cv_point.x;
-  point_msg.y = cv_point.y;
+  point_msg.x = x;
+  point_msg.y = y;
   return point_msg;
+}
+
+static inline Point toPointMsg(const cv::Point &cv_point) {
+  return toPointMsg(cv_point.x, cv_point.y);
 }
 
 static inline Points toPointsMsg(const std::vector< cv::Point > &cv_points) {
@@ -47,6 +51,20 @@ static inline Points toPointsMsg(const std::vector< cv::Point > &cv_points) {
     points_msg.points.push_back(toPointMsg(cv_point));
   }
   return points_msg;
+}
+
+static inline Points toPointsMsg(const cv::Rect &cv_rect) {
+  Points points_msg;
+  const cv::Point tl(cv_rect.tl()), br(cv_rect.br());
+  points_msg.points.push_back(toPointMsg(tl.x, tl.y));
+  points_msg.points.push_back(toPointMsg(br.x, tl.y));
+  points_msg.points.push_back(toPointMsg(br.x, br.y));
+  points_msg.points.push_back(toPointMsg(tl.x, br.y));
+  return points_msg;
+}
+
+static inline Points toPointsMsg(const cv::Size &cv_size) {
+  return toPointsMsg(cv::Rect(cv::Point(0, 0), cv_size));
 }
 
 static inline std::vector< Points >
