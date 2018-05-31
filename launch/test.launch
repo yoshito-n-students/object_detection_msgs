@@ -1,0 +1,19 @@
+<launch>
+    <!-- -->
+    <!-- synchronized object publisher -->
+    <node name="synchronized_object_publisher" pkg="nodelet" type="nodelet"
+          args="standalone object_detection_msgs/SynchronizedObjectPublisher" output="screen">
+        <rosparam>
+            subscribe_image: true
+            names:
+                - "square"
+                - "triangle"
+            contours:
+                - [ [ 0, 0 ], [ 0, 100 ], [ 100, 100 ], [ 100, 0 ] ]
+                - [ [ 150, 150 ], [ 200, 200 ], [ 200, 250 ] ]
+        </rosparam>
+    </node>
+    <!-- -->
+    <!-- object printer -->
+    <node name="object_printer" pkg="rostopic" type="rostopic" args="echo objects_out" output="screen"/>
+</launch>

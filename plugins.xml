@@ -1,0 +1,5 @@
+<library path="lib/libsynchronized_object_publisher">
+    <class name="object_detection_msgs/SynchronizedObjectPublisher" type="object_detection_msgs::SynchronizedObjectPublisher" base_class_type="nodelet::Nodelet">
+        <description>publish objects synchronized to another topic</description>
+    </class>
+</library>
