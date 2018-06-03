@@ -54,5 +54,22 @@ set_objects ([object_detection_msgs/SetObjects](srv/SetObjects.srv))
 ~image_transport (string, default: "raw")
 * transport type for the subscribed image topic
 
-### Examples
+## Nodelet: NonMaximumSuppressor
+* subscribe an object topic and suppress overlapped objects with lower probabilities
+
+### Subscribed topics
+objects_in ([object_detection_msgs/Objects](msg/Objects.msg))
+
+### Published topics
+objects_out ([object_detection_msgs/Objects](msg/Objects.msg))
+
+### Parameters
+~score_threshold (double, default: 0.4)\
+~nms_threshold (double, default: 0.5)\
+~eta (double, default: 1.0)\
+~top_k (int, default: 0)
+* parameters for non maximum suppression (NMS) algorithm
+* see documentation of cv::dnn::NMSBoxes()
+
+## Examples
 see [launch/test.launch](launch/test.launch)
