@@ -72,4 +72,4 @@ objects_out ([object_detection_msgs/Objects](msg/Objects.msg))
 * see documentation of cv::dnn::NMSBoxes()
 
 ## Examples
-see [launch/test.launch](launch/test.launch)
+see [launch/test_*.launch](launch)
