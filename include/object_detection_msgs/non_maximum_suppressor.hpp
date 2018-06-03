@@ -103,8 +103,8 @@ private:
     ros::NodeHandle &nh(getNodeHandle());
     ros::NodeHandle &pnh(getPrivateNodeHandle());
 
-    score_threshold_ = pnh.param("score_threshold", 0.5);
-    nms_threshold_ = pnh.param("nms_threshold", 0.4);
+    score_threshold_ = pnh.param("score_threshold", 0.4);
+    nms_threshold_ = pnh.param("nms_threshold", 0.5);
     eta_ = pnh.param("eta", 1.);
     top_k_ = pnh.param("top_k", 0);
 
