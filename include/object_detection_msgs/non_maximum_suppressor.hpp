@@ -119,7 +119,7 @@ private:
                 nms_threshold_, indices, eta_, top_k_);
 
     // pick kept objects
-    ObjectsPtr object_out(new Objects);
+    const ObjectsPtr object_out(new Objects);
     BOOST_FOREACH (const int idx, indices) {
       object_out->names.push_back(idx < object_in->names.size() ? object_in->names[idx]
                                                                 : std::string(""));
