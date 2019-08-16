@@ -120,6 +120,7 @@ private:
 
     // pick kept objects
     const ObjectsPtr object_out(new Objects);
+    object_out->header.stamp = object_in->header.stamp;
     BOOST_FOREACH (const int idx, indices) {
       object_out->names.push_back(idx < object_in->names.size() ? object_in->names[idx]
                                                                 : std::string(""));
