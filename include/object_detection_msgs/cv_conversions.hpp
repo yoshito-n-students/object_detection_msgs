@@ -80,8 +80,8 @@ toCvContours2f(const std::vector< Points > &contours_msg) {
 
 template < typename T > static inline Point toPointMsg(const T x, const T y) {
   Point point_msg;
-  point_msg.x = static_cast< int >(x);
-  point_msg.y = static_cast< int >(y);
+  point_msg.x = static_cast< float >(x);
+  point_msg.y = static_cast< float >(y);
   return point_msg;
 }
 
