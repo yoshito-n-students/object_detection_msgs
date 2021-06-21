@@ -124,8 +124,8 @@ private:
         for (std::size_t j = 0; j < points_tree.size(); ++j) {
           XmlRpc::XmlRpcValue &point_tree(points_tree[j]);
           Point point;
-          point.x = point_tree[0];
-          point.y = point_tree[1];
+          point.x = static_cast< int >(point_tree[0]);
+          point.y = static_cast< int >(point_tree[1]);
           points.points.push_back(point);
         }
         contours.push_back(points);

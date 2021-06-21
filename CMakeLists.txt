@@ -8,6 +8,7 @@ project(object_detection_msgs)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  cv_bridge
   image_transport
   message_generation
   nodelet
@@ -19,7 +20,10 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(OpenCV REQUIRED COMPONENTS 
+  core
+  imgproc
+)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -110,8 +114,8 @@ generate_messages(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES synchronized_object_publisher
-  CATKIN_DEPENDS image_transport message_runtime nodelet pluginlib roscpp sensor_msgs std_msgs xmlrpcpp
+  LIBRARIES object_detection_msg_tools
+  CATKIN_DEPENDS cv_bridge image_transport message_runtime nodelet pluginlib roscpp sensor_msgs std_msgs xmlrpcpp
 #  DEPENDS system_lib
 )
 
@@ -128,22 +132,26 @@ include_directories(
 
 ## Declare a C++ library
 add_library(
-  synchronized_object_publisher
+  object_detection_msg_tools
   src/synchronized_object_publisher.cpp
+  src/non_maximum_suppressor.cpp
 )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
 add_dependencies(
-  synchronized_object_publisher 
+  object_detection_msg_tools
   ${object_detection_msgs_EXPORTED_TARGETS}
 )
 
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/object_detection_msgs_node.cpp)
+add_executable(
+  sort_example 
+  src/sort_example.cpp
+)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -153,12 +161,22 @@ add_dependencies(
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(
+  sort_example
+  ${${PROJECT_NAME}_EXPORTED_TARGETS} 
+  ${catkin_EXPORTED_TARGETS}
+)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(
-  synchronized_object_publisher
+  object_detection_msg_tools
   ${catkin_LIBRARIES}
+  ${OpenCV_LIBRARIES}
+)
+target_link_libraries(
+  sort_example
+  ${catkin_LIBRARIES}
+  ${OpenCV_LIBRARIES}
 )
 
 #############
