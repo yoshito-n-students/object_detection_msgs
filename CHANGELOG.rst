@@ -2,7 +2,7 @@
 Changelog for package object_detection_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.0.2 (2020-XX-XX)
+0.0.2 (2021-06-22)
 ------------------
 * Add sorting utilities
 
