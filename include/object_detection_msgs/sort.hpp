@@ -80,7 +80,7 @@ template <class Compare> bool sortByName(Objects *const objs, Compare comp) {
   if (!objs) {
     return false;
   }
-  const std::vector<std::size_t> ops(operationsToSort(permutation(objs->names, comp)));
+  const std::vector<std::size_t> ops = operationsToSort(permutation(objs->names, comp));
   return applyOperationsToSort(&objs->names, ops) &&
          applyOperationsToSort(&objs->probabilities, ops) &&
          applyOperationsToSort(&objs->contours, ops);
@@ -90,7 +90,7 @@ template <class Compare> bool sortByProbability(Objects *const objs, Compare com
   if (!objs) {
     return false;
   }
-  const std::vector<std::size_t> ops(operationsToSort(permutation(objs->probabilities, comp)));
+  const std::vector<std::size_t> ops = operationsToSort(permutation(objs->probabilities, comp));
   return applyOperationsToSort(&objs->names, ops) &&
          applyOperationsToSort(&objs->probabilities, ops) &&
          applyOperationsToSort(&objs->contours, ops);
@@ -100,7 +100,7 @@ template <class Compare> bool sortByContour(Objects *const objs, Compare comp) {
   if (!objs) {
     return false;
   }
-  const std::vector<std::size_t> ops(operationsToSort(permutation(objs->contours, comp)));
+  const std::vector<std::size_t> ops = operationsToSort(permutation(objs->contours, comp));
   return applyOperationsToSort(&objs->names, ops) &&
          applyOperationsToSort(&objs->probabilities, ops) &&
          applyOperationsToSort(&objs->contours, ops);
