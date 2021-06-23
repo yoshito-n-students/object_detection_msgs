@@ -24,33 +24,32 @@
 namespace object_detection_msgs {
 
 // calc overlap of 2 contours
-static inline double computeOverlap(const std::vector< cv::Point > &a,
-                                    const std::vector< cv::Point > &b) {
+static inline double computeOverlap(const std::vector<cv::Point> &a,
+                                    const std::vector<cv::Point> &b) {
   // rectangle of interest
   const cv::Rect roi(cv::boundingRect(a) & cv::boundingRect(b));
   const cv::Point offset(-roi.tl());
 
   // draw a polygon represented by contour A
   cv::Mat poly_a(cv::Mat::zeros(roi.size(), CV_8UC1));
-  cv::fillPoly(poly_a, std::vector< std::vector< cv::Point > >(1, a), 1, cv::LINE_8, 1, offset);
+  cv::fillPoly(poly_a, std::vector<std::vector<cv::Point>>(1, a), 1, cv::LINE_8, 1, offset);
 
   // draw a polygon represented by contour B
   cv::Mat poly_b(cv::Mat::zeros(roi.size(), CV_8UC1));
-  cv::fillPoly(poly_b, std::vector< std::vector< cv::Point > >(1, b), 1, cv::LINE_8, 1, offset);
+  cv::fillPoly(poly_b, std::vector<std::vector<cv::Point>>(1, b), 1, cv::LINE_8, 1, offset);
 
   // calc <area of polygon A and B> / <area of polygon A or B>
   //    (0: no overlap, 1: complete overlap)
-  return static_cast< double >(cv::countNonZero(poly_a & poly_b)) /
-         cv::countNonZero(poly_a | poly_b);
+  return static_cast<double>(cv::countNonZero(poly_a & poly_b)) / cv::countNonZero(poly_a | poly_b);
 }
 
 // variant of cv::dnn::NMSBoxes() for general contours
-static inline void NMSContours(const std::vector< std::vector< cv::Point > > &contours,
-                               const std::vector< double > &scores, const double score_threshold,
-                               const double nms_threshold, std::vector< int > &indices,
+static inline void NMSContours(const std::vector<std::vector<cv::Point>> &contours,
+                               const std::vector<double> &scores, const double score_threshold,
+                               const double nms_threshold, std::vector<int> &indices,
                                const double eta = 1., const int top_k = 0) {
   // sort scores (with corresponding indices)
-  typedef std::multimap< double, int, std::greater< double > > ScoreMap;
+  typedef std::multimap<double, int, std::greater<double>> ScoreMap;
   ScoreMap score_map;
   for (std::size_t i = 0; i < std::min(scores.size(), contours.size()); ++i) {
     // validate score
@@ -108,13 +107,13 @@ private:
     eta_ = pnh.param("eta", 1.);
     top_k_ = pnh.param("top_k", 0);
 
-    publisher_ = nh.advertise< Objects >("objects_out", 1, true);
+    publisher_ = nh.advertise<Objects>("objects_out", 1, true);
     subscriber_ = nh.subscribe("objects_in", 1, &NonMaximumSuppressor::suppress, this);
   }
 
   void suppress(const ObjectsConstPtr &object_in) {
     // non maximum suppression
-    std::vector< int > indices;
+    std::vector<int> indices;
     NMSContours(toCvContours(object_in->contours), object_in->probabilities, score_threshold_,
                 nms_threshold_, indices, eta_, top_k_);
 

@@ -17,9 +17,9 @@ odm::Points triangleContour(const double len) {
   contour.points[0].x = 0;
   contour.points[0].y = 0;
   contour.points[1].x = 0;
-  contour.points[1].y = static_cast< int >(len);
-  contour.points[2].x = static_cast< int >(len * 0.5 /* cos(pi/3) */);
-  contour.points[2].y = static_cast< int >(len * 0.8660 /* sin(pi/3) */);
+  contour.points[1].y = static_cast<int>(len);
+  contour.points[2].x = static_cast<int>(len * 0.5 /* cos(pi/3) */);
+  contour.points[2].y = static_cast<int>(len * 0.8660 /* sin(pi/3) */);
   return contour;
 }
 
@@ -62,10 +62,10 @@ int main(int argc, char *argv[]) {
 
   ROS_INFO_STREAM("Before sorting:\n" << objs);
 
-  odm::sortByName(&objs, std::less< std::string >());
+  odm::sortByName(&objs, std::less<std::string>());
   ROS_INFO_STREAM("Sorted by name:\n" << objs);
 
-  odm::sortByProbability(&objs, std::greater< double >());
+  odm::sortByProbability(&objs, std::greater<double>());
   ROS_INFO_STREAM("Sorted by probability:\n" << objs);
 
   odm::sortByContour(&objs, GreaterArea());
