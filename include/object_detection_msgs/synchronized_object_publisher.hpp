@@ -1,6 +1,7 @@
 #ifndef OBJECT_DETECTION_MSGS_SYNCHRONIZED_OBJECT_PUBLISHER_HPP
 #define OBJECT_DETECTION_MSGS_SYNCHRONIZED_OBJECT_PUBLISHER_HPP
 
+#include <iterator> // for std::back_inserter()
 #include <vector>
 
 #include <image_transport/image_transport.h>
@@ -17,6 +18,8 @@
 #include <xmlrpcpp/XmlRpcException.h>
 #include <xmlrpcpp/XmlRpcValue.h>
 
+#include <boost/range/algorithm/copy.hpp>
+
 namespace object_detection_msgs {
 
 class SynchronizedObjectPublisher : public nodelet::Nodelet {
@@ -27,12 +30,12 @@ public:
 
 private:
   virtual void onInit() {
-    ros::NodeHandle &nh(getNodeHandle());
-    ros::NodeHandle &pnh(getPrivateNodeHandle());
+    ros::NodeHandle &nh = getNodeHandle();
+    ros::NodeHandle &pnh = getPrivateNodeHandle();
 
     // load params
-    const bool subscribe_image(pnh.param("subscribe_image", false));
-    const bool subscribe_objects(pnh.param("subscribe_objects", false));
+    const bool subscribe_image = pnh.param("subscribe_image", false);
+    const bool subscribe_objects = pnh.param("subscribe_objects", false);
     objects_.names = pnh.param("names", std::vector<std::string>());
     objects_.probabilities = pnh.param("probablities", std::vector<double>());
     objects_.contours = contoursParam(pnh, "contours", std::vector<Points>());
@@ -49,7 +52,7 @@ private:
     // subscribe images and/or objects to be synchronized
     if (subscribe_image) {
       image_transport::ImageTransport it(nh);
-      const image_transport::TransportHints default_hints;
+      static const image_transport::TransportHints default_hints;
       image_subscriber_ =
           it.subscribe("image_raw", 1, &SynchronizedObjectPublisher::publishObjects, this,
                        image_transport::TransportHints(default_hints.getTransport(),
@@ -86,21 +89,18 @@ private:
 
     // complete target objects
     {
-      const std::size_t max_size(
+      const std::size_t max_size =
           std::max(std::max(objects_out->names.size(), objects_out->probabilities.size()),
-                   objects_out->contours.size()));
+                   objects_out->contours.size());
       objects_out->names.resize(max_size, "");
       objects_out->probabilities.resize(max_size, -1.);
       objects_out->contours.resize(max_size, Points());
     }
 
     // append user-specified to target objects
-    objects_out->names.insert(objects_out->names.end(), objects_.names.begin(),
-                              objects_.names.end());
-    objects_out->probabilities.insert(objects_out->probabilities.end(),
-                                      objects_.probabilities.begin(), objects_.probabilities.end());
-    objects_out->contours.insert(objects_out->contours.end(), objects_.contours.begin(),
-                                 objects_.contours.end());
+    boost::copy(objects_.names, std::back_inserter(objects_out->names));
+    boost::copy(objects_.probabilities, std::back_inserter(objects_out->probabilities));
+    boost::copy(objects_.contours, std::back_inserter(objects_out->contours));
 
     object_publisher_.publish(objects_out);
   }
