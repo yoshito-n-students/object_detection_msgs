@@ -36,23 +36,23 @@ int main(int argc, char *argv[]) {
 
   odm::Objects objs;
   //
-  objs.names.push_back("smallest");
+  objs.names.push_back("smallest contour with medium probability");
   objs.probabilities.push_back(0.5);
   objs.contours.push_back(triangleContour(5.));
   //
-  objs.names.push_back("2nd smallest");
+  objs.names.push_back("2nd smallest contour with smallest probability");
   objs.probabilities.push_back(0.);
   objs.contours.push_back(triangleContour(10.));
   //
-  objs.names.push_back("medium");
+  objs.names.push_back("medium contour with 2nd smallest probability");
   objs.probabilities.push_back(0.2);
   objs.contours.push_back(triangleContour(15.));
   //
-  objs.names.push_back("2nd largest");
+  objs.names.push_back("2nd largest contour with largest probability");
   objs.probabilities.push_back(0.9);
   objs.contours.push_back(triangleContour(20.));
   //
-  objs.names.push_back("largest");
+  objs.names.push_back("largest contour with 2nd largest probability");
   objs.probabilities.push_back(0.8);
   objs.contours.push_back(triangleContour(25.));
 
