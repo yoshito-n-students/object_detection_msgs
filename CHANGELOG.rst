@@ -2,6 +2,10 @@
 Changelog for package object_detection_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.3 (2021-06-27)
+------------------
+* Refactor using c++11
+
 0.0.2 (2021-06-22)
 ------------------
 * Add sorting utilities
