@@ -16,6 +16,7 @@
 
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <boost/range/algorithm/copy.hpp>
+#include <boost/range/algorithm/max_element.hpp>
 
 namespace object_detection_msgs {
 
@@ -93,10 +94,15 @@ private:
 
   void integrate(const std::vector<ObjectsConstPtr> &msgs_in) {
     const ObjectsPtr msg_out(new Objects());
-    // check frame id consistency?
-    // average stamps?
-    msg_out->header = msgs_in[0]->header;
+    // header
+    const ObjectsConstPtr latest_msg_in =
+        *boost::max_element(msgs_in, [](const ObjectsConstPtr &a, const ObjectsConstPtr &b) {
+          return a->header.stamp < b->header.stamp;
+        });
+    msg_out->header = latest_msg_in->header;
+    // other fields
     for (const ObjectsConstPtr &msg_in : msgs_in) {
+      // check frame id consistency?
       boost::copy(msg_in->names, std::back_inserter(msg_out->names));
       boost::copy(msg_in->probabilities, std::back_inserter(msg_out->probabilities));
       boost::copy(msg_in->contours, std::back_inserter(msg_out->contours));
