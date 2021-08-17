@@ -1,8 +1,21 @@
 <library path="lib/libobject_detection_msg_tools">
-    <class name="object_detection_msgs/SynchronizedObjectPublisher" type="object_detection_msgs::SynchronizedObjectPublisher" base_class_type="nodelet::Nodelet">
-        <description>publish objects synchronized to another topic</description>
-    </class>
-    <class name="object_detection_msgs/NonMaximumSuppressor" type="object_detection_msgs::NonMaximumSuppressor" base_class_type="nodelet::Nodelet">
+
+    <class name="object_detection_msgs/NonMaximumSuppressor" 
+           type="object_detection_msgs::NonMaximumSuppressor" 
+           base_class_type="nodelet::Nodelet">
         <description>suppress overlapped contours with low probabilities</description>
     </class>
+    
+    <class name="object_detection_msgs/SynchronizedObjectPublisher" 
+           type="object_detection_msgs::SynchronizedObjectPublisher" 
+           base_class_type="nodelet::Nodelet">
+        <description>publish objects synchronized to another topic</description>
+    </class>
+
+    <class name="object_detection_msgs/ObjectIntegrator" 
+           type="object_detection_msgs::ObjectIntegrator" 
+           base_class_type="nodelet::Nodelet">
+        <description>merge multiple topics of objects to single topic</description>
+    </class>
+
 </library>

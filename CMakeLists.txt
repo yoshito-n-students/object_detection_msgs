@@ -10,6 +10,7 @@ add_compile_options(-std=c++11)
 find_package(catkin REQUIRED COMPONENTS
   cv_bridge
   image_transport
+  message_filters
   message_generation
   nodelet
   pluginlib
@@ -115,7 +116,17 @@ generate_messages(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES object_detection_msg_tools
-  CATKIN_DEPENDS cv_bridge image_transport message_runtime nodelet pluginlib roscpp sensor_msgs std_msgs xmlrpcpp
+  CATKIN_DEPENDS 
+  cv_bridge
+  message_filters 
+  image_transport 
+  message_runtime 
+  nodelet 
+  pluginlib 
+  roscpp 
+  sensor_msgs 
+  std_msgs 
+  xmlrpcpp
 #  DEPENDS system_lib
 )
 
