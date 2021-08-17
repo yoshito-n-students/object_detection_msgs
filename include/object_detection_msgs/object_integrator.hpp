@@ -14,6 +14,9 @@
 #include <object_detection_msgs/Objects.h>
 #include <ros/publisher.h>
 
+#include <boost/preprocessor/enum.hpp>
+#include <boost/preprocessor/enum_params.hpp>
+#include <boost/preprocessor/repeat_from_to.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <boost/range/algorithm/copy.hpp>
 #include <boost/range/algorithm/max_element.hpp>
@@ -114,7 +117,7 @@ private:
   boost::ptr_vector<message_filters::Subscriber<Objects>> subs_;
   std::shared_ptr<void> sync_;
   ros::Publisher pub_;
-}; // namespace object_detection_msgs
+};
 
 } // namespace object_detection_msgs
 
