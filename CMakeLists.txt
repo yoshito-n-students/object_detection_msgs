@@ -133,8 +133,7 @@ include_directories(
 ## Declare a C++ library
 add_library(
   object_detection_msg_tools
-  src/synchronized_object_publisher.cpp
-  src/non_maximum_suppressor.cpp
+  src/object_detection_msg_tools.cpp
 )
 
 ## Add cmake target dependencies of the library
